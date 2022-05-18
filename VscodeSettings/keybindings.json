@@ -1,0 +1,35 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+alt+a",
+        "command": "workbench.action.toggleActivityBarVisibilityi"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+alt+m",
+        "command": "workbench.action.toggleStatusbarVisibility"
+    },
+    {
+        "key": "ctrl+alt+a",
+        "command": "workbench.action.toggleActivityBarVisibility"
+    },
+    {
+        "key": "ctrl+alt+h",
+        "command": "workbench.action.toggleMenuBar"
+    },
+    {
+        "key": "alt+m",
+        "command": "editor.action.toggleMinimap"
+    },
+    {
+        "key": "capslock tab",
+        "command": "toggleVim"
+    }
+]
