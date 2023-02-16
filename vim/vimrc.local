@@ -1,0 +1,59 @@
+"set the number bar 
+set number
+
+"set keybinding for visul mode  
+imap jj <esc>
+
+" leader key setup
+let mapleader = ","
+
+"setup save file with leader
+imap <leader>w ;
+
+"true on syntax hightlighting
+syntax on
+
+"set tabs spacees
+set tabstop=2
+
+"set auto indention for formating
+set autoindent
+
+set expandtab
+
+"for cursorlin like
+set cursorline
+
+"Enable Omnicomplete features
+set omnifunc=syntaxcomplete#Complete
+
+"column size for file viwer. left hendside
+let g:NERDTreeWinSize=20
+
+"opening NERDTree by default when enter into vim.
+autocmd vimenter * NERDTree
+
+"Prettier shortcut keys for formating.
+nmap <Leader>py <Plug>(Prettier)
+
+"============== plugins ==============
+call plug#begin()
+
+plug "vim-scripts/AutoComplPop"
+
+plug "prettier/vim-prettier"
+
+call plug#end()
+
+"=== prettier ====
+
+let g:prettier#watch#enabled = 1
+let g:prettier#autoformat = 1
+let g:prettier#config_path = './prettierrc'
+
+"=============== Themes ===============
+
+packadd! dracula
+
+syntax enable
+

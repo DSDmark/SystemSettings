@@ -1,0 +1,259 @@
+" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+" the call to :runtime you can find below.  If you wish to change any of those
+" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+" will be overwritten everytime an upgrade of the vim packages is performed.
+" It is recommended to make changes after sourcing debian.vim since it alters
+" the value of the 'compatible' option.
+
+runtime! debian.vim
+
+" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
+" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
+" any settings in these files.
+" If you don't want that to happen, uncomment the below line to prevent
+" defaults.vim from being loaded.
+" let g:skip_defaults_vim = 1
+
+" Uncomment the next line to make Vim more Vi-compatible
+" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
+" options, so any other options should be set AFTER setting 'compatible'.
+"set compatible
+
+" Vim5 and later versions support syntax highlighting. Uncommenting the next
+" line enables syntax highlighting by default.
+"syntax on
+
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+"set background=dark
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+"au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Uncomment the following to have Vim load indentation rules and plugins
+" according to the detected filetype.
+"filetype plugin indent on
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+"set showcmd		" Show (partial) command in status line.
+"set showmatch		" Show matching brackets.
+"set ignorecase		" Do case insensitive matching
+"set smartcase		" Do smart case matching
+"set incsearch		" Incremental search
+"set autowrite		" Automatically save before commands like :next and :make
+"set hidden		" Hide buffers when they are abandoned
+"set mouse=a		" Enable mouse usage (all modes)
+
+" Source a global configuration file if available
+if filereadable("/etc/vim/vimrc.local")
+  source /etc/vim/vimrc.local
+endif
+"====================================================================
+
+"set the number bar 
+set number
+
+" set the spaces when formater vim (not prettier)
+set shiftwidth=2
+
+"set keybinding for visul mode  
+imap jj <esc>
+
+" leader key setup
+let mapleader =','
+
+"save on leader + w
+map <Leader>w :w<CR>
+
+"exite 
+map <Leader>x :x<CR>
+
+"set the cursor color
+highlight Cursor guibg=#00FF00
+
+"true on syntax hightlighting
+syntax on
+
+"set tabs width
+set tabstop=4
+
+set guicursor=n:cul-Cursor,i:ver25-Cursor
+
+"set default zoon size of font
+set guifont=Courier_New:h5
+
+"Enable Omnicomplete features
+set omnifunc=syntaxcomplete#Complete
+
+"column size for file viwer. left hendside
+let g:NERDTreeWinSize=20
+
+"deleting whitespaces on save
+autocmd BufwritePro * %s/\s\+$//e
+"opening NERDTree by default when enter into vim.
+autocmd vimenter * NERDTree
+
+"Prettier shortcut keys for formating.
+nmap <Leader>, <Plug>(Prettier)
+
+filetype plugin on
+
+set clipboard=unnamed
+
+"============== plugins ==============
+stdpath('config') . '/init.vim'
+
+call plug#begin()
+
+Plug "vim-scripts/AutoComplPop"
+Plug "prettier/vim-prettier"
+Plug "sukima/xmledit"
+Plug "alvan/vim-closetag"
+Plug 'jiangmiao/auto-pairs'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'SirVer/ultisnips'
+Plug 'mlaursen/vim-react-snippets'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdcommenter'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql' 
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'mattn/emmet-vim'
+
+call plug#end()
+"==== emmet =============================================
+
+let g:user_emmet_mode='n'    "only enable normal mode functions.
+let g:user_emmet_mode='inv'  "enable all functions, which is equal to
+let g:user_emmet_mode='a'    "enable all function in all mode.
+let g:user_emmet_leader_key='<leader>q'
+
+"=== YCM =================================================
+
+" Start autocompletion after 4 chars
+let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_enable_diagnostic_highlighting = 0" Don't show YCM's preview window [ I find it really annoying ]
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+
+"=== vim=jsx ==============================================
+
+let g:jsx_ext_required = 1
+let g:jsx_pragma_required = 1
+
+"=== vim-javascript ========================================
+
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+
+"=== prettier ==============================================
+
+let g:prettier#watch#enabled = 1
+let g:prettier#autoformat = 1
+let g:prettier#config_path = './prettierrc'
+" Automatically format on save
+autocmd BufWritePre *.{js,json,md,py,yml} :silent !prettier --stdin-filepath % > /dev/null
+
+"=============== Themes ====================================
+
+packadd! dracula
+
+syntax enable
+
+"==================== vim-airline ==========================
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'default'
+
+"========================= nerdcommenter =================================
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+"=============================================================
+
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_enable_react_fragment = 1
+
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+
+" integer value [0|1]
+    " This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 1
+
+" dict
+" Disables auto-close if not in a "valid" region (based on filetype)
+    let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+      \ 'javascriptreact': 'jsxRegion',
+        \ }
+
+  " Shortcut for closing tags, default is '>'
+        let g:closetag_shortcut = '>'
+
+  " Add > at current position without closing the current tag, default is ''
+  "
+let g:closetag_close_shortcut = '<leader>>'
+
+  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.erb,*.jsx"
+  let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.erb'
+  let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_shortcut = '>'
+let g:closetag_close_shortcut = '<leader>>'
+
+
+
+"============================================================
