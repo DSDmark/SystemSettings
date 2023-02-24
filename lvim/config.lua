@@ -7,19 +7,20 @@ a global executable or a path to
 an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-
+-- setting NvimTree default size
+lvim.builtin.nvimtree.setup.view.width = 10
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = false
+lvim.format_on_save.enabled = true
 lvim.colorscheme = "lunar"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = ","
--- adding the jj key for normal_mode  
+-- adding the jj key for normal_mode
 lvim.keys.insert_mode["jj"] = "<Esc>"
--- adding the save file key 
+-- adding the save file key
 lvim.keys.normal_mode["<leader>w"] = ":w<CR>"
 -- adding close file keymapping
 lvim.keys.normal_mode["<leader>x"] = ":x<CR>"
@@ -27,6 +28,8 @@ lvim.keys.normal_mode["<leader>x"] = ":x<CR>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- adding keymapping for edit tab current
 lvim.keys.normal_mode["<leader>t"] = ":tabedit %<CR>:NvimTreeToggle<CR>"
+-- toggle the text wrap
+lvim.keys.normal_mode["<leader>z"] = ":set wrap!<CR>"
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
