@@ -8,6 +8,17 @@ an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 -- setting NvimTree default size
+------------------------------------------------------
+------------------------------------------------------
+-- plugins installation
+
+lvim.plugins = {
+
+  { "iamcco/markdown-preview.nvim" },
+  { "github/copilot.vim" }
+
+}
+
 lvim.builtin.nvimtree.setup.view.width = 10
 -- general
 lvim.log.level = "warn"
@@ -15,21 +26,26 @@ lvim.format_on_save.enabled = true
 lvim.colorscheme = "lunar"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
-
 -- keymappings [view all the defaults by pressing <leader>Lk]
+-- markdown-preview config
 lvim.leader = ","
 -- adding the jj key for normal_mode
 lvim.keys.insert_mode["jj"] = "<Esc>"
 -- adding the save file key
 lvim.keys.normal_mode["<leader>w"] = ":w<CR>"
 -- adding close file keymapping
-lvim.keys.normal_mode["<leader>x"] = ":x<CR>"
+lvim.keys.normal_mode["<leader>x"] = ":BufferLineCloseRight<CR>"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- adding keymapping for edit tab current
 lvim.keys.normal_mode["<leader>t"] = ":tabedit %<CR>:NvimTreeToggle<CR>"
 -- toggle the text wrap
 lvim.keys.normal_mode["<leader>z"] = ":set wrap!<CR>"
+-- jumptotab function
+lvim.keys.normal_mode["<leader><Tab>"] = ":lua JumpToTab()<CR>"
+-- setting windon decrease & increase width
+lvim.keys.normal_mode["<C-S-h>"] = "<C-Left>"
+
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
@@ -99,7 +115,6 @@ lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
 
 -- generic LSP settings
-
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
 --     "sumneko_lua",
@@ -194,3 +209,14 @@ lvim.builtin.treesitter.highlight.enable = true
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+
+-- defining all above functions
+function JumpToTab()
+  local tabNum = vim.fn.input('😋 Enter you tab:')
+
+  if tabNum ~= "" then
+    vim.cmd(":bn" .. tabNum)
+  else
+    vim.cmd(":bp")
+  end
+end

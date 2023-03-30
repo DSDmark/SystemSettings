@@ -21,11 +21,6 @@ function cdJump(){
   fi
 }
 
-#----------------
-function mDk(){
-	touch ~/.e.txt
-}
-
 # git commands
 function gitUp(){
   local msg="$1"
@@ -41,6 +36,11 @@ function attiSet(){
 }
 
 attiSet > /tmp/attiSet.log 2>&1 &
+
 # adding lvim default editor
 export VISUAL=lvim
 export EDITOR="$VISUAL"
+
+
+
+
