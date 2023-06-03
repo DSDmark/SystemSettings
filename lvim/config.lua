@@ -15,8 +15,7 @@ an executable
 lvim.plugins = {
 
   { "iamcco/markdown-preview.nvim" },
-  { "github/copilot.vim" }
-
+  { "github/copilot.vim" },
 }
 
 lvim.builtin.nvimtree.setup.view.width = 10
@@ -24,7 +23,7 @@ lvim.builtin.nvimtree.setup.view.width = 10
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
 lvim.colorscheme = "lunar"
--- to disable icons and use a minimalist setup, uncomment the following
+lvim.prettier = 1;
 -- lvim.use_icons = false
 -- keymappings [view all the defaults by pressing <leader>Lk]
 -- markdown-preview config
@@ -43,8 +42,6 @@ lvim.keys.normal_mode["<leader>t"] = ":tabedit %<CR>:NvimTreeToggle<CR>"
 lvim.keys.normal_mode["<leader>z"] = ":set wrap!<CR>"
 -- jumptotab function
 lvim.keys.normal_mode["<leader><Tab>"] = ":lua JumpToTab()<CR>"
--- setting windon decrease & increase width
-lvim.keys.normal_mode["<C-S-h>"] = "<C-Left>"
 
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
@@ -92,7 +89,6 @@ lvim.keys.normal_mode["<C-S-h>"] = "<C-Left>"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
 -- if you don't want all the parsers change this to a table of the ones you want
