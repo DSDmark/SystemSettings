@@ -30,6 +30,8 @@ lvim.prettier = 1;
 lvim.leader = ","
 -- adding the jj key for normal_mode
 lvim.keys.insert_mode["jj"] = "<Esc>"
+-- toggling terminal popup
+lvim.keys.normal_mode["<leader>3"] = ":ToggleTerm<CR>"
 -- adding the save file key
 lvim.keys.normal_mode["<leader>w"] = ":w<CR>"
 -- adding close file keymapping
