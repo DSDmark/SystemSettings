@@ -1,6 +1,5 @@
 --[[
 lvim is the global options object
-
 Linters should be
 filled in as strings with either
 a global executable or a path to
@@ -10,20 +9,12 @@ an executable
 -- setting NvimTree default size
 ------------------------------------------------------
 ------------------------------------------------------
--- plugins installation
-
-lvim.plugins = {
-
-  { "iamcco/markdown-preview.nvim" },
-  { "github/copilot.vim" },
-}
-
-lvim.builtin.nvimtree.setup.view.width = 10
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = true
 lvim.colorscheme = "lunar"
-lvim.prettier = 1;
+lvim.builtin.nvimtree.setup.view.width = 10
+lvim.format_on_save.enabled = true
+
 -- lvim.use_icons = false
 -- keymappings [view all the defaults by pressing <leader>Lk]
 -- markdown-preview config
@@ -44,8 +35,22 @@ lvim.keys.normal_mode["<leader>t"] = ":tabedit %<CR>:NvimTreeToggle<CR>"
 lvim.keys.normal_mode["<leader>z"] = ":set wrap!<CR>"
 -- jumptotab function
 lvim.keys.normal_mode["<leader><Tab>"] = ":lua JumpToTab()<CR>"
+-- showing all message including error and others
+lvim.keys.normal_mode["<leader>m"] = ":lua ShowWarningMess()<CR>"
 
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+function ShowWarningMess()
+  local line_number = vim.fn.line('.')
+  local diagnostics = vim.diagnostic.get(0, { lnum = line_number - 1 })
+  if diagnostics and #diagnostics > 0 then
+    local output = diagnostics[1].message
+    print(output)
+    -- copying into system clipboard through register
+    vim.fn.setreg("+", output)
+  else
+    print("No diagnostics found for line " .. line_number)
+  end
+end
+
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
@@ -70,21 +75,17 @@ lvim.keys.normal_mode["<leader><Tab>"] = ":lua JumpToTab()<CR>"
 --   },
 -- }
 
--- Change theme settings
--- lvim.builtin.theme.options.dim_inactive = true
--- lvim.builtin.theme.options.style = "storm"
-
 -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
--- }
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -114,10 +115,10 @@ lvim.builtin.treesitter.highlight.enable = true
 
 -- generic LSP settings
 -- -- make sure server will always be installed even if the server is in skipped_servers list
--- lvim.lsp.installer.setup.ensure_installed = {
---     "sumneko_lua",
---     "jsonls",
--- }
+lvim.lsp.installer.setup.ensure_installed = {
+  "sumneko_lua",
+  "jsonls",
+}
 -- -- change UI setting of `LspInstallInfo`
 -- -- see <https://github.com/williamboman/nvim-lsp-installer#default-configuration>
 -- lvim.lsp.installer.setup.ui.check_outdated_servers_on_open = false
@@ -153,64 +154,69 @@ lvim.builtin.treesitter.highlight.enable = true
 -- end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   { command = "black", filetypes = { "python" } },
---   { command = "isort", filetypes = { "python" } },
---   {
---     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "prettier",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--print-with", "100" },
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  { command = "black", filetypes = { "python" } },
+  { command = "isort", filetypes = { "python" } },
+  {
+    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+    command = "prettier",
+    ---@usage arguments to pass to the formatter
+    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+    extra_args = { "--line-width=80", "--single-quote", "--no-semi", "--jsx-single-quote",
+      "--bracket-same-line", "--arrow-parens=avoid" },
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html",
+      "json", "jsonc", "yaml", "markdown", "markdown.mdx", "graphql", "handlebars" },
+  },
+}
 
--- -- set additional linters
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "shellcheck",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--severity", "warning" },
---   },
---   {
---     command = "codespell",
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "javascript", "python" },
---   },
--- }
+-- each formatter accepts a list of options identical to
+-- set additional linters
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  { command = "flake8", filetypes = { "python" } },
+  {
+    -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+    command = "shellcheck",
+    ---@usage arguments to pass to the formatter
+    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+    extra_args = { "--severity", "warning" },
+  },
+  {
+    command = "codespell",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "javascript", "python" },
+  },
+}
 
 -- Additional Plugins
--- lvim.plugins = {
---     {
---       "folke/trouble.nvim",
---       cmd = "TroubleToggle",
---     },
--- }
+lvim.plugins = {
+  {
+    "folke/trouble.nvim",
+    cmd = "TroubleToggle",
+  },
+  { "dracula/vim" },
+}
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.json", "*.jsonc" },
+  -- enable wrap mode for json files only
+  command = "setlocal wrap",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "zsh",
+  callback = function()
+    -- let treesitter use bash highlight for zsh files as well
+    require("nvim-treesitter.highlight").attach(0, "bash")
+  end,
+})
 
 -- defining all above functions
 function JumpToTab()
-  local tabNum = vim.fn.input('😋 Enter you tab:')
+  local tabNum = vim.fn.input("😋 Enter you tab:")
 
   if tabNum ~= "" then
     vim.cmd(":bn" .. tabNum)
