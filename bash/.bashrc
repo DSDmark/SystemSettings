@@ -1,14 +1,18 @@
-# bash code......
+# ====================================== custom code ================================================
+# nvim env
+export PATH="$HOME/.local/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/home/dsdmark/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
-esac # pnpm end add shortcut commands files source ~/bashCommands/main.sh export PATH="$PATH:~/bashCommands"
+esac
+# pnpm end
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# starship 
+eval "$(starship init bash)"
 
+# user bash shortcut file
 source ~/bashCommands/main.sh
+
