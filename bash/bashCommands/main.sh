@@ -41,6 +41,6 @@ attiSet > /tmp/attiSet.log 2>&1 &
 export VISUAL=lvim
 export EDITOR="$VISUAL"
 
-
-
+# printing date
+echo -e "Today date is \e[96m \e[5m`date +%d/%m/%y` \e[25m"
 
