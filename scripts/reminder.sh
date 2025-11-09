@@ -1,0 +1,10 @@
+[Unit]
+Description=Run reminder every 30 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+Unit=reminder.service
+
+[Install]
+WantedBy=timers.target
