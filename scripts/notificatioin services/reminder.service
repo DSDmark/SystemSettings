@@ -1,0 +1,7 @@
+[Unit]
+Description=Show reminder notification with sound
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/bin/notify-send "Reminder" "Time to stretch or drink water!" && paplay /usr/share/sounds/freedesktop/stereo/complete.oga'
+

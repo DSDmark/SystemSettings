@@ -8,3 +8,4 @@ Unit=reminder.service
 
 [Install]
 WantedBy=timers.target
+
