@@ -1,0 +1,12 @@
+{
+ "extension-id": "app",
+ "uuid": "app@hubstaff.com",
+ "settings-schema": "org.gnome.shell.extensions.app",
+ "gettext-domain": "gnome-shell-extensions",
+ "name": "Hubstaff AppTrack (GJS Module)",
+ "description": "Hubstaff Extension for Application/URL Tracking",
+ "shell-version": ["3.36", "3.37", "3.38", "3.39", "40", "41", "42", "43", "44" ],
+ "url": "https://www.hubstaff.com",
+ "version": 4,
+ "session-modes": ["user", "unlock-dialog"]
+}
