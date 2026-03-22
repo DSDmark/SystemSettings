@@ -1,0 +1,47 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-3": "terminal_panel::Toggle",
+    },
+  },
+
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j j": "vim::NormalBefore",
+    },
+  },
+
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      ", w": "workspace::Save",
+      ", c": "pane::CloseActiveItem",
+      ", z": "editor::ToggleSoftWrap",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-space": "editor::ShowCompletions",
+    },
+  },
+  {
+    "bindings": {
+      "ctrl-right": "editor::SelectLargerSyntaxNode",
+      "ctrl-left": "editor::SelectSmallerSyntaxNode",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "o": "project_panel::Open",
+    },
+  },
+  {
+    "bindings": {
+      "ctrl-s": "workspace::Save",
+    },
+  },
+]
